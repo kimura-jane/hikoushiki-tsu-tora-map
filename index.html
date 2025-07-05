@@ -2,30 +2,25 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <title>通販の虎 ご当地グルメ MAP</title>
-
-  <!-- Leaflet CSS -->
+  <title>通販の虎 MAP</title>
   <link rel="stylesheet"
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <style>html,body{margin:0;height:100%}#map{height:100%}</style>
+  <style>html,body{height:100%;margin:0}#map{height:100%}</style>
 </head>
 <body>
 <div id="map"></div>
 
-<!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<!-- 既定ピン（黄色ロゴ） -->
 <script>
+// ── 既定ピン（黄色ロゴ） ──
 L.Icon.Default.mergeOptions({
   iconUrl      : '/hikoushiki-tsu-tora-map/IMG_7824.jpeg',
   iconRetinaUrl: '/hikoushiki-tsu-tora-map/IMG_7824.jpeg',
   shadowUrl    : null
 });
-</script>
 
-<!-- 非掲載ピン（赤バツ） -->
-<script>
+// ── 非掲載ピン（赤バツ） ──
 const crossIcon = L.icon({
   iconUrl   : '/hikoushiki-tsu-tora-map/IMG_7823.jpeg',
   iconSize  : [40,40],
@@ -33,13 +28,13 @@ const crossIcon = L.icon({
   popupAnchor:[0,-38],
   shadowUrl : null
 });
-</script>
 
-<script>
+// ── 地図 ──
 const map = L.map('map').setView([37.5,138],5);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   {attribution:'© OpenStreetMap contributors'}).addTo(map);
 
+// ── スポット ──
 const spots = [
   {n:'讃岐名物やみつきチャーシュー（多度津町）',lat:34.270116,lon:133.751806},
   {n:'丸亀骨付鳥餃子（丸亀市）',lat:34.285975,lon:133.792225},
@@ -59,9 +54,10 @@ const spots = [
   {n:'牛もつ味噌煮込み（つくば市）',lat:36.059502,lon:140.151634}
 ];
 
+// ── マーカー ──
 spots.forEach(p=>{
   L.marker([p.lat,p.lon],
-    {icon: p.n.includes('(非掲載)') ? crossIcon : undefined})
+    {icon:p.n.includes('(非掲載)')?crossIcon:undefined})
    .addTo(map)
    .bindPopup(`<strong>${p.n}</strong>`);
 });
