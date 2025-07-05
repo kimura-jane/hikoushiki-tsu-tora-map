@@ -3,28 +3,35 @@
 <head>
   <meta charset="utf-8">
   <title>通販の虎 ご当地グルメ MAP</title>
+
+  <!-- Leaflet CSS -->
   <link rel="stylesheet"
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <style>html,body{height:100%;margin:0}#map{height:100%}</style>
+  <style>
+    html,body { height:100%; margin:0; }
+    #map      { height:100%; }
+  </style>
 </head>
 <body>
+
 <div id="map"></div>
 
+<!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<!-- 通常ピン（黄色ロゴ） -->
+<!-- ── 通常ピン（黄色ロゴ） ── -->
 <script>
 L.Icon.Default.mergeOptions({
-  iconUrl      : './IMG_7824.jpeg',
-  iconRetinaUrl: './IMG_7824.jpeg',
+  iconUrl      : '/hikoushiki-tsu-tora-map/IMG_7824.jpeg',
+  iconRetinaUrl: '/hikoushiki-tsu-tora-map/IMG_7824.jpeg',
   shadowUrl    : null
 });
 </script>
 
-<!-- 非掲載ピン（赤バツ） -->
+<!-- ── 非掲載ピン（赤バツ） ── -->
 <script>
 const crossIcon = L.icon({
-  iconUrl   : './IMG_7823.jpeg',
+  iconUrl   : '/hikoushiki-tsu-tora-map/IMG_7823.jpeg',
   iconSize  : [40,40],
   iconAnchor: [20,40],
   popupAnchor:[0,-38],
@@ -33,33 +40,38 @@ const crossIcon = L.icon({
 </script>
 
 <script>
-const map = L.map('map').setView([37.5,138],5);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {attribution:'© OpenStreetMap contributors'}).addTo(map);
+/* 地図初期化（日本全体を俯瞰） */
+const map = L.map('map').setView([37.5, 138], 5);
+L.tileLayer(
+  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  { attribution: '© OpenStreetMap contributors' }
+).addTo(map);
 
+/* スポット配列（17 件）*/
 const spots = [
-  {n:'讃岐名物やみつきチャーシュー（多度津町）',lat:34.270116,lon:133.751806},
-  {n:'丸亀骨付鳥餃子（丸亀市）',lat:34.285975,lon:133.792225},
-  {n:'上勝棚田米どぶろく（上勝町）',lat:33.883333,lon:134.400000},
-  {n:'フォアグラ芋けんぴ（高知市）',lat:33.550000,lon:133.533000},
-  {n:'西山金時スウィートポテトロール（室戸市）',lat:33.286600,lon:134.154700},
-  {n:'田野屋塩二郎の塩（田野町）',lat:33.440332,lon:134.008607},
-  {n:'発酵ジンジャー（倶知安町）',lat:42.894100,lon:140.758800},
-  {n:'(非掲載)笹活ササチャ（笹茶ドリンク／岩見沢市）',lat:43.196100,lon:141.773000},
-  {n:'加賀見農園 SINKA（山梨市三ヶ所）',lat:35.687966,lon:138.704456},
-  {n:'ジェネリック化粧品（甲府市国母）',lat:35.638741,lon:138.555345},
-  {n:'山口養魚場サーモン（むつ市）',lat:41.262846,lon:141.220895},
-  {n:'岩手短角和牛セット（岩手町）',lat:39.972199,lon:141.223390},
-  {n:'浜ののりだれ（七ヶ浜町）',lat:38.290243,lon:141.064946},
-  {n:'半熟燻製卵スモッち（天童市）',lat:38.335496,lon:140.340312},
-  {n:'あおもり生プリン（青森市橋本）',lat:40.822747,lon:140.754271},
-  {n:'牛もつ味噌煮込み（つくば市）',lat:36.059502,lon:140.151634}
+  { n:'讃岐名物やみつきチャーシュー（多度津町）',               lat:34.270116, lon:133.751806 },
+  { n:'丸亀骨付鳥餃子（丸亀市）',                               lat:34.285975, lon:133.792225 },
+  { n:'上勝棚田米どぶろく（上勝町）',                           lat:33.883333, lon:134.400000 },
+  { n:'フォアグラ芋けんぴ（高知市）',                           lat:33.550000, lon:133.533000 },
+  { n:'西山金時スウィートポテトロール（室戸市）',                lat:33.286600, lon:134.154700 },
+  { n:'田野屋塩二郎の塩（田野町）',                             lat:33.440332, lon:134.008607 },
+  { n:'発酵ジンジャー（倶知安町）',                             lat:42.894100, lon:140.758800 },
+  { n:'(非掲載)笹活ササチャ（笹茶ドリンク／岩見沢市）',          lat:43.196100, lon:141.773000 },
+  { n:'加賀見農園 SINKA（山梨市三ヶ所）',                       lat:35.687966, lon:138.704456 },
+  { n:'ジェネリック化粧品（甲府市国母）',                       lat:35.638741, lon:138.555345 },
+  { n:'山口養魚場サーモン（むつ市）',                           lat:41.262846, lon:141.220895 },
+  { n:'岩手短角和牛セット（岩手町）',                           lat:39.972199, lon:141.223390 },
+  { n:'浜ののりだれ（七ヶ浜町）',                               lat:38.290243, lon:141.064946 },
+  { n:'半熟燻製卵スモッち（天童市）',                           lat:38.335496, lon:140.340312 },
+  { n:'あおもり生プリン（青森市橋本）',                         lat:40.822747, lon:140.754271 },
+  { n:'牛もつ味噌煮込み（つくば市）',                           lat:36.059502, lon:140.151634 }
 ];
 
+/* マーカー描画 */
 spots.forEach(p=>{
   L.marker(
-    [p.lat,p.lon],
-    {icon:p.n.includes('(非掲載)')?crossIcon:undefined}
+    [p.lat, p.lon],
+    { icon: p.n.includes('(非掲載)') ? crossIcon : undefined }
   ).addTo(map).bindPopup(`<strong>${p.n}</strong>`);
 });
 </script>
