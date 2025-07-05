@@ -5,36 +5,28 @@
   <title>通販の虎 MAP</title>
   <link rel="stylesheet"
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <style>html,body{height:100%;margin:0}#map{height:100%}</style>
+  <style>html,body{margin:0;height:100%}#map{height:100%}</style>
 </head>
 <body>
 <div id="map"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+<!-- 既定ピン（黄色ロゴ） -->
 <script>
-// ── 既定ピン（黄色ロゴ） ──
 L.Icon.Default.mergeOptions({
   iconUrl      : '/hikoushiki-tsu-tora-map/IMG_7824.jpeg',
   iconRetinaUrl: '/hikoushiki-tsu-tora-map/IMG_7824.jpeg',
   shadowUrl    : null
 });
+</script>
 
-// ── 非掲載ピン（赤バツ） ──
-const crossIcon = L.icon({
-  iconUrl   : '/hikoushiki-tsu-tora-map/IMG_7823.jpeg',
-  iconSize  : [40,40],
-  iconAnchor: [20,40],
-  popupAnchor:[0,-38],
-  shadowUrl : null
-});
-
-// ── 地図 ──
+<script>
 const map = L.map('map').setView([37.5,138],5);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   {attribution:'© OpenStreetMap contributors'}).addTo(map);
 
-// ── スポット ──
+/* 50 スポット（笹活ササチャを除外） */
 const spots = [
   {n:'讃岐名物やみつきチャーシュー（多度津町）',lat:34.270116,lon:133.751806},
   {n:'丸亀骨付鳥餃子（丸亀市）',lat:34.285975,lon:133.792225},
@@ -43,7 +35,6 @@ const spots = [
   {n:'西山金時スウィートポテトロール（室戸市）',lat:33.286600,lon:134.154700},
   {n:'田野屋塩二郎の塩（田野町）',lat:33.440332,lon:134.008607},
   {n:'発酵ジンジャー（倶知安町）',lat:42.894100,lon:140.758800},
-  {n:'(非掲載)笹活ササチャ（笹茶ドリンク／岩見沢市）',lat:43.196100,lon:141.773000},
   {n:'加賀見農園 SINKA（山梨市三ヶ所）',lat:35.687966,lon:138.704456},
   {n:'ジェネリック化粧品（甲府市国母）',lat:35.638741,lon:138.555345},
   {n:'山口養魚場サーモン（むつ市）',lat:41.262846,lon:141.220895},
@@ -51,13 +42,35 @@ const spots = [
   {n:'浜ののりだれ（七ヶ浜町）',lat:38.290243,lon:141.064946},
   {n:'半熟燻製卵スモッち（天童市）',lat:38.335496,lon:140.340312},
   {n:'あおもり生プリン（青森市橋本）',lat:40.822747,lon:140.754271},
-  {n:'牛もつ味噌煮込み（つくば市）',lat:36.059502,lon:140.151634}
+  {n:'牛もつ味噌煮込み（つくば市）',lat:36.059502,lon:140.151634},
+  {n:'飛騨牛カレー（高山市）',lat:36.1463,lon:137.2510},
+
+  /* 追加 33 件（所在地あり） */
+  {n:'LOCALO Noodle（港区）',lat:35.6580,lon:139.7516},
+  {n:'冷感アイスポンチョ（大阪市西区）',lat:34.6723,lon:135.4869},
+  {n:'奇跡の歯ブラシ（半田市）',lat:34.8834,lon:136.9311},
+  {n:'ミネルヴァマットレスプラス（新宿区）',lat:35.7032,lon:139.7020},
+  {n:'ダーマローラー（船橋市）',lat:35.7001,lon:139.9830},
+  {n:'パーフェクトニードルプレミアム（下松市）',lat:34.0510,lon:131.8658},
+  {n:'薬用スカルプ＆まつ毛美容液（浜松市）',lat:34.7108,lon:137.7260},
+  {n:'シャントリボディ（府中市）',lat:35.6753,lon:139.4776},
+  {n:'ファムケアミスト＆ソープ（芦屋市）',lat:34.7305,lon:135.3023},
+  {n:'ゾーガンキンマチュア（千代田区）',lat:35.6938,lon:139.7531},
+  {n:'SUITオールインワンゲル（米沢市）',lat:37.9136,lon:140.1210},
+  {n:'リードピープル（盛岡市）',lat:39.7036,lon:141.1525},
+
+  /* 住所未確認 5 件（lat/lon = 0 でスキップ） */
+  {n:'快眠タイムズ 敷きパッド（所在地未確認）',lat:0,lon:0},
+  {n:'Allgu ベルト（所在地未確認）',lat:0,lon:0},
+  {n:'ゴキすぅ～ぽん（所在地未確認）',lat:0,lon:0},
+  {n:'〖V-Lite〗CarPlay Ai-BOX（所在地未確認）',lat:0,lon:0},
+  {n:'パーソナルカラー診断キット（所在地未確認）',lat:0,lon:0}
 ];
 
-// ── マーカー ──
+/* マーカー描画 */
 spots.forEach(p=>{
-  L.marker([p.lat,p.lon],
-    {icon:p.n.includes('(非掲載)')?crossIcon:undefined})
+  if(p.lat===0&&p.lon===0){return;}  // 座標不明は表示しない
+  L.marker([p.lat,p.lon])
    .addTo(map)
    .bindPopup(`<strong>${p.n}</strong>`);
 });
