@@ -12,23 +12,26 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+<!-- ── 共通アイコン（黄色ロゴ 48×48） ── -->
 <script>
-/* ── 1. 地図 ── */
-const map = L.map('map').setView([37.5,138],5);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {attribution:'© OpenStreetMap contributors'}).addTo(map);
-
-/* ── 2. 「虎」アイコンを明示定義 ── */
 const tigerIcon = L.icon({
-  iconUrl   : '/hikoushiki-tsu-tora-map/IMG_7824.jpeg', // ← 実際に表示できた URL
+  iconUrl   : '/hikoushiki-tsu-tora-map/IMG_7824.jpeg',
+  iconRetinaUrl:'/hikoushiki-tsu-tora-map/IMG_7824.jpeg',
   iconSize  : [48,48],
   iconAnchor:[24,48],
   popupAnchor:[0,-44],
   shadowUrl : null
 });
+</script>
 
-/* ── 3. スポット配列（笹茶除外・歯ブラシ=千葉）── */
-const spots = [
+<script>
+/* 地図初期化 */
+const map=L.map('map').setView([37.5,138],5);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  {attribution:'© OpenStreetMap contributors'}).addTo(map);
+
+/* 51 スポット（笹活ササチャ・パーソナルカラー除外） */
+const spots=[
   {n:'讃岐名物やみつきチャーシュー（多度津町）',lat:34.270116,lon:133.751806},
   {n:'丸亀骨付鳥餃子（丸亀市）',               lat:34.285975,lon:133.792225},
   {n:'上勝棚田米どぶろく（上勝町）',           lat:33.883333,lon:134.400000},
@@ -57,10 +60,15 @@ const spots = [
   {n:'ゾーガンキンマチュア（千代田区）',        lat:35.693800,lon:139.753100},
   {n:'SUITオールインワンゲル（米沢市）',        lat:37.913600,lon:140.121000},
   {n:'リードピープル（盛岡市）',                lat:39.703600,lon:141.152500},
-  /* 座標未確定 5 件は省略表示 */
+  {n:'快眠タイムズ 敷きパッド（名古屋市昭和区）',lat:35.147000,lon:136.926000},
+  {n:'Allgu ベルト（上海市閔行区）',            lat:31.114000,lon:121.371000},
+  {n:'ゴキすぅ～ぽん（大阪狭山市）',            lat:34.506000,lon:135.544000},
+  {n:'〖V-Lite〗特定小型原付（岡山市北区）',     lat:34.657000,lon:133.892000},
+  {n:'MILEL CarPlay Ai BOX（足立区）',          lat:35.777000,lon:139.784000},
+  {n:'グランウォール®（川越市）',              lat:35.917600,lon:139.485000}
 ];
 
-/* ── 4. マーカー描画（必ず tigerIcon を指定） ── */
+/* マーカー描画 */
 spots.forEach(p=>{
   L.marker([p.lat,p.lon],{icon:tigerIcon})
    .addTo(map)
