@@ -11,26 +11,21 @@
 <div id="map"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<!-- 既定ピン（黄色ロゴ） -->
-<script>
+<!-- 黄色ロゴ（既定ピン） -->
 L.Icon.Default.mergeOptions({
-  iconUrl      : 'IMG_7824.jpeg',   // ← 同じフォルダなので相対パス
-  iconRetinaUrl: 'IMG_7824.jpeg',
+  iconUrl      : '/hikoushiki-tsu-tora-map/IMG_7824.jpeg',
+  iconRetinaUrl: '/hikoushiki-tsu-tora-map/IMG_7824.jpeg',
   shadowUrl    : null
 });
-</script>
 
-<!-- 非掲載ピン（赤バツ） -->
-<script>
+<!-- 赤バツ（非掲載ピン） -->
 const crossIcon = L.icon({
-  iconUrl   : 'IMG_7823.jpeg',
+  iconUrl   : '/hikoushiki-tsu-tora-map/IMG_7823.jpeg',
   iconSize  : [40,40],
   iconAnchor:[20,40],
   popupAnchor:[0,-38],
   shadowUrl : null
 });
-</script>
 
 <script>
 const map=L.map('map').setView([37.5,138],5);
